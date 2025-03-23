@@ -1,0 +1,790 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brain Tumor Detection</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Brain Tumor Detection</h1>
+        <p>Upload an MRI image to detect the presence of a brain tumor.</p>
+        
+
+        <form action="/predict" method="POST" enctype="multipart/form-data">
+            <div class="file-input">
+                <input type="file" name="file" id="file" accept="image/*" required>
+                <label for="file">Choose an image</label>
+            </div>
+            <button type="submit">Upload and Predict</button>
+        </form>
+
+        
+
+         
+        <form method="POST" enctype="multipart/form-data" action="/predict">
+    <label for="disease">Select Disease:</label>
+    <select name="disease" id="disease">
+        <option value="brain_tumor">Brain Tumor</option>
+        <option value="pneumonia">Pneumonia</option>
+    </select>
+    <input type="file" name="file" required>
+    <button type="submit">Predict</button>
+</form>
+
+{% if result %}
+    <h3>Prediction: {{ result }}</h3>
+{% endif %}
+
+
+
+
+
+
+        <div id="result">
+            {% if result %}
+                <h2>Prediction: {{ result }}</h2>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html> -->
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disease Prediction</title>
+</head>
+<body>
+    <h1>Select Disease and Upload Image</h1>
+    <form method="POST" enctype="multipart/form-data" action="/predict">
+        <label for="disease">Select Disease:</label>
+        <select name="disease" id="disease" required>
+            <option value="brain_tumor">Brain Tumor</option>
+            <option value="pneumonia">Pneumonia</option>
+        </select>
+        <br><br>
+        <input type="file" name="file" accept="image/*" required>
+        <br><br>
+        <button type="submit">Predict</button>
+    </form>
+
+    {% if result %}
+        <h3>Prediction: {{ result }}</h3>
+    {% endif %}
+</body>
+</html> 
+
+
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disease Prediction</title>
+</head>
+<body>
+    <h1>Select Disease and Upload Image</h1>
+    <form method="POST" enctype="multipart/form-data" action="/predict">
+        <label for="disease">Select Disease:</label>
+        <select name="disease" id="disease" required>
+            <option value="brain_tumor">Brain Tumor</option>
+            <option value="pneumonia">Pneumonia</option>
+            <option value="covid19">COVID-19</option> 
+            <option value="maleria">Maleria</option>
+        </select>
+        <br><br>
+        <input type="file" name="file" accept="image/*" required>
+        <br><br>
+        <button type="submit">Predict</button>
+    </form>
+
+    {% if result %}
+        <h3>Prediction: {{ result }}</h3>
+    {% endif %}
+</body>
+</html> -->
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disease Prediction</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+             background: rgba(0, 0, 0, 0.945) ;   /*linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://example.com/background-image.jpg') no-repeat center center/cover; */ 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #fff;
+        }
+
+        h1 {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        form {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+            backdrop-filter: blur(10px);
+            width: 400px;
+            text-align: center;
+        }
+
+        label {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        select, input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: none;
+            font-size: 1rem;
+            background-color: rgba(255, 255, 255, 0.8);
+            outline: none;
+            cursor: pointer;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #2246bd;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #3e23b6;
+        }
+
+        h3 {
+            margin-top: 20px;
+            font-size: 1.5rem;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>Disease Prediction</h1>
+        <form method="POST" enctype="multipart/form-data" action="/predict">
+            <label for="disease">Select Disease:</label>
+            <select name="disease" id="disease" required>
+                <option value="brain_tumor">Brain Tumor</option>
+                <option value="pneumonia">Pneumonia</option>
+            </select>
+            <br><br>
+            <input type="file" name="file" accept="image/*" required>
+            <br><br>
+            <button type="submit">Predict</button>
+        </form>
+
+        {% if result %}
+            <h3>Prediction: {{ result }}</h3>
+        {% endif %}
+    </div>
+</body>
+</html> -->
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disease Prediction</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: rgba(0, 0, 0, 0.945);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #fff;
+        }
+
+        h1 {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        form {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+            backdrop-filter: blur(10px);
+            width: 400px;
+            text-align: center;
+        }
+
+        label {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        select, input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: none;
+            font-size: 1rem;
+            background-color: rgba(255, 255, 255, 0.8);
+            outline: none;
+            cursor: pointer;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #2246bd;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #3e23b6;
+        }
+
+        h3 {
+            margin-top: 20px;
+            font-size: 1.5rem;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>Disease Prediction</h1>
+        <form method="POST" enctype="multipart/form-data" action="/predict">
+            <label for="disease">Select Disease:</label>
+            <select name="disease" id="disease" required>
+                <option value="brain_tumor">Brain Tumor</option>
+                <option value="pneumonia">Pneumonia</option>
+            </select>
+            <br><br>
+            <input type="file" name="file" accept="image/*" required>
+            <br><br>
+            <button type="submit">Predict</button>
+        </form>
+
+        {% if result %}
+            <h3>Prediction: {{ result }}</h3>
+        {% endif %}
+    </div>
+</body>
+</html> -->
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disease Prediction</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: rgba(0, 0, 0, 0.945);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #fff;
+        }
+
+        h1 {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        form {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+            backdrop-filter: blur(10px);
+            width: 400px;
+            text-align: center;
+        }
+
+        label {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        select, input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: none;
+            font-size: 1rem;
+            background-color: rgba(255, 255, 255, 0.8);
+            outline: none;
+            cursor: pointer;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #2246bd;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #3e23b6;
+        }
+
+        h3 {
+            margin-top: 20px;
+            font-size: 1.5rem;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>Disease Prediction</h1>
+        <form method="POST" enctype="multipart/form-data" action="/predict">
+            <label for="disease">Select Disease:</label>
+            <select name="disease" id="disease" required>
+                <option value="brain_tumor">Brain Tumor</option>
+                <option value="pneumonia">Pneumonia</option>
+            </select>
+            <br><br>
+            <input type="file" name="file" accept="image/*" required>
+            <br><br>
+            <button type="submit">Predict</button>
+        </form>
+
+        {% if result %}
+            <h3>Prediction: {{ result }}</h3>
+        {% endif %}
+    </div>
+</body>
+</html> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--  
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disease Prediction</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: rgba(0, 0, 0, 0.945);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #fff;
+        }
+
+        h1 {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        form {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+            backdrop-filter: blur(10px);
+            width: 400px;
+            text-align: center;
+        }
+
+        label {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        select, input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: none;
+            font-size: 1rem;
+            background-color: rgba(255, 255, 255, 0.8);
+            outline: none;
+            cursor: pointer;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #2246bd;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #3e23b6;
+        }
+
+        h3 {
+            margin-top: 20px;
+            font-size: 1.5rem;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>Disease Prediction</h1>
+
+        {% if show_back_button %}
+            
+            <form method="GET" action="/">
+                <button type="submit">Back</button>
+            </form>
+        {% else %}
+            
+            <form method="POST" enctype="multipart/form-data" action="/predict">
+                <label for="disease">Select Disease:</label>
+                <select name="disease" id="disease" required>
+                    <option value="brain_tumor">Brain Tumor</option>
+                    <option value="pneumonia">Pneumonia</option>
+                </select>
+                <br><br>
+                <input type="file" name="file" accept="image/*" required>
+                <br><br>
+                <button type="submit">Predict</button>
+            </form>
+        {% endif %}
+
+        {% if result %}
+            <h3>Prediction: {{ result }}</h3>
+        {% endif %}
+    </div>
+</body>
+</html>
+
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disease Prediction</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: rgba(0, 0, 0, 0.945);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #fff;
+        }
+
+        h1 {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        form {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+            backdrop-filter: blur(10px);
+            width: 400px;
+            text-align: center;
+        }
+
+        label {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        select, input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: none;
+            font-size: 1rem;
+            background-color: rgba(255, 255, 255, 0.8);
+            outline: none;
+            cursor: pointer;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #2246bd;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #3e23b6;
+        }
+
+        h3 {
+            margin-top: 20px;
+            font-size: 1.5rem;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<!-- <body>
+    <div>
+        <h1>Disease Prediction</h1>
+ 
+        {% if show_back_button %}
+            
+            <form method="GET" action="/">
+                <button type="submit">Back</button>
+            </form>
+        {% else %}
+            
+            <form method="POST" enctype="multipart/form-data" action="/predict">
+                <label for="disease">Select Disease:</label>
+                <select name="disease" id="disease" required>
+                    <option value="brain_tumor">Brain Tumor</option>
+                    <option value="pneumonia">Pneumonia</option>
+                    <option value="covid19">COVID-19</option> 
+                    <option value="maleria">Malaria</option> 
+                </select>
+                <br><br>
+                <input type="file" style="text-color:red" name="file" accept="image/*" required>
+                <br><br>
+                <button type="submit">Predict</button>
+            </form>
+        {% endif %}
+
+        {% if result %}
+             
+            <h3>Prediction: {{ result }}</h3>
+        {% endif %}
+    </div>
+</body> -->
+
+
+
+<body>
+    <div style="text-align: center; font-family: Arial, sans-serif;">
+        <h1 style="color: #4CAF50;">Disease Prediction</h1>
+
+        {% if show_back_button %}
+            <form method="GET" action="/">
+                <button type="submit" style="padding: 10px 20px; background-color: #f44336; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                    Back
+                </button>
+            </form>
+        {% else %}
+            <form method="POST" enctype="multipart/form-data" action="/predict" style="margin-bottom: 20px;">
+                <label for="disease" style="font-size: 18px;">Select Disease:</label>
+                <select name="disease" id="disease" required style="padding: 5px; font-size: 16px; margin-left: 10px;">
+                    <option value="brain_tumor">Brain Tumor</option>
+                    <option value="pneumonia">Pneumonia</option>
+                    <option value="covid19">COVID-19</option>
+                    <option value="maleria">Malaria</option>
+                </select>
+                <br><br>
+                <input type="file" name="file" accept="image/*" required style="padding: 5px; font-size: 16px; border: 1px solid #ccc; border-radius: 5px;">
+                <br><br>
+                <button type="submit" style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                    Predict
+                </button>
+            </form>
+        {% endif %}
+
+       
+        {% if result %}
+    <h3 style="color: #2196F3;">Prediction: {{ result }}</h3>
+    <div>
+        <h4 style="color: #757575;">Uploaded Image:</h4>
+        <img src="{{ image_url }}" alt="Uploaded Image" style="max-width: 300px; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">
+    </div>
+{% endif %}
+
+
+    </div>
+</body>
+
+
+
+
+
+
+
+</html>
